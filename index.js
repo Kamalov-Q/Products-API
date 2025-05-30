@@ -23,6 +23,10 @@ const productRoute = require("./routes/product.route");
 app.use("/categories", categoryRoute);
 app.use("/products", productRoute);
 
+app.get("/", async (_, res) => {
+  res.status(200).json("API is working fine");
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   console.log(`Swagger docs available at http://localhost:${PORT}/api-docs`);

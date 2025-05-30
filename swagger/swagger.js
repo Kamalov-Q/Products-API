@@ -13,6 +13,10 @@ const options = {
         url: "http://localhost:3000",
         description: "Local Server",
       },
+      {
+        url: "https://products-api-s3zt.onrender.com/",
+        description: "Production Server",
+      },
     ],
   },
   apis: ["./controllers/*.js"], // Path to files with JSDoc comments
