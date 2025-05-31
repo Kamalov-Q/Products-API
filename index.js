@@ -23,6 +23,18 @@ const productRoute = require("./routes/product.route");
 app.use("/categories", categoryRoute);
 app.use("/products", productRoute);
 
+app.get("/health", async (req, res) => {
+  try {
+    // Basic query to check DB connectivity
+    await prisma.$queryRaw`SELECT 1`;
+
+    res.status(200).json({ status: "ok", db: "connected" });
+  } catch (error) {
+    console.error("Health check failed:", error);
+    res.status(500).json({ status: "error", db: "unreachable" });
+  }
+});
+
 app.get("/", async (_, res) => {
   res.status(200).json("API is working fine");
 });
