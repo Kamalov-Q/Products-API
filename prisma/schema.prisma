@@ -20,7 +20,7 @@ model Category {
 model Product {
   id          Int      @id @default(autoincrement())
   name        String   @unique @db.VarChar(120)
-  description String?  @db.Text
+  description String?
   price       Decimal  @db.Decimal(10, 2)
   currency    String   @default("USD") @db.VarChar(3)
   quantity    Int      @default(0)
@@ -28,7 +28,7 @@ model Product {
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
   categoryId  Int      @map("category_id")
-  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  category    Category @relation(fields: [categoryId], references: [id])
 
   @@map("products")
 }

@@ -524,7 +524,7 @@ exports.getProductByCategoryId = async (req, res) => {
     if (
       !categoryId ||
       String(categoryId).trim() === "" ||
-      (!await prisma.category.findUnique({
+      !(await prisma.category.findUnique({
         where: {
           id: parseInt(categoryId),
         },
@@ -534,8 +534,6 @@ exports.getProductByCategoryId = async (req, res) => {
         .status(422)
         .json({ message: "Category id is required or not found" });
     }
-
-    // const 
 
     const products = await prisma.product.findMany({
       where: {

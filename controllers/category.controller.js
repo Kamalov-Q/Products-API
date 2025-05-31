@@ -273,7 +273,7 @@ exports.deleteCategory = async (req, res) => {
   try {
     const { id } = req.params;
     if (!id) {
-      return res.status(422).json({ error: "Category ID is required" });
+      return res.status(422).json({ message: "Category ID is required" });
     }
 
     const existingCategory = await prisma.category.findUnique({
@@ -283,7 +283,21 @@ exports.deleteCategory = async (req, res) => {
     });
 
     if (!existingCategory) {
-      return res.status(404).json({ error: "Category not found" });
+      return res.status(404).json({ message: "Category not found" });
+    }
+
+    const productCount = await prisma.product.count({
+      where: {
+        categoryId: parseInt(id),
+      },
+    });
+
+    if (productCount) {
+      return res
+        .status(409)
+        .json({
+          message: `Category id being used in ${productCount} product(s)`,
+        });
     }
 
     const deletedCategory = await prisma.category.delete({
@@ -298,6 +312,6 @@ exports.deleteCategory = async (req, res) => {
     });
   } catch (error) {
     console.error("Error deleting category:", error);
-    return res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
