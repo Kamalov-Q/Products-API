@@ -19,7 +19,7 @@ const options = {
       },
     ],
   },
-  apis: ["./controllers/*.js"], // Path to files with JSDoc comments
+  apis: ["./docs/*.js"], // Path to files with JSDoc comments
 };
 
 const swaggerSpec = swaggerJsDocs(options);
